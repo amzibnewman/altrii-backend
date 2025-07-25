@@ -32,6 +32,15 @@ app.use('/api/webhooks/stripe', express.raw({ type: 'application/json' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Health check endpoint - ADD THIS
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'Server is running!',
+    database: 'Connected',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
