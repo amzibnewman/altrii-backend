@@ -12,9 +12,15 @@ const webhookRoutes = require('./routes/webhooks');
 const app = express();
 
 // Security middleware
+// Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: [
+    process.env.FRONTEND_URL,
+    'https://altrii-frontend-production.up.railway.app', // Add your Railway frontend URL
+    'http://localhost:3000', // For local development
+    'http://localhost:3001'  // Alternative local port
+  ],
   credentials: true
 }));
 
