@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 // Create transporter with correct environment variable names
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: parseInt(process.env.SMTP_PORT),
   secure: process.env.SMTP_SECURE === 'true',
