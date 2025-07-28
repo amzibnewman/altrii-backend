@@ -8,19 +8,14 @@ const authRoutes = require('./routes/auth');
 const subscriptionRoutes = require('./routes/subscriptions');
 const deviceRoutes = require('./routes/devices');
 const webhookRoutes = require('./routes/webhooks');
+const profileRoutes = require('./routes/profiles'); // ADD THIS LINE
 
 const app = express();
 
 // Security middleware
-// Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL,
-    'https://altrii-frontend-production.up.railway.app', // Add your Railway frontend URL
-    'http://localhost:3000', // For local development
-    'http://localhost:3001'  // Alternative local port
-  ],
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
@@ -38,20 +33,12 @@ app.use('/api/webhooks/stripe', express.raw({ type: 'application/json' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health check endpoint - ADD THIS
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'Server is running!',
-    database: 'Connected',
-    timestamp: new Date().toISOString()
-  });
-});
-
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/devices', deviceRoutes);
 app.use('/api/webhooks', webhookRoutes);
+app.use('/api/profiles', profileRoutes); // ADD THIS LINE
 
 // Error handling middleware
 app.use((err, req, res, next) => {
